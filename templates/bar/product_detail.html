@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Деталі продукту - {{ product.name }}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Ти можеш вставити стилі тут або підключити окремий CSS файл */
+        .product-detail {
+          padding: 30px;
+          background-color: #f9f9f9;
+          border-radius: 8px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-detail h1 {
+          font-size: 36px;
+          font-weight: bold;
+          color: #333;
+          margin-bottom: 20px;
+        }
+
+        .product-image img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 8px;
+        }
+
+        .product-info p {
+          font-size: 18px;
+          line-height: 1.6;
+          color: #555;
+          margin: 10px 0;
+        }
+
+        .product-info strong {
+          color: #000;
+        }
+
+        .back-btn {
+          margin-top: 30px;
+        }
+
+        .back-btn .btn {
+          padding: 10px 20px;
+          font-size: 16px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          text-decoration: none;
+          text-align: center;
+        }
+
+        .back-btn .btn:hover {
+          background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container product-detail">
+        <h1>{{ product.name }}</h1>
+        
+        <!-- Зображення продукту -->
+        <div class="product-image">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+        </div>
+        
+        <!-- Деталі продукту -->
+        <div class="product-info">
+          <p><strong>Опис:</strong> {{ product.description }}</p>
+          <p><strong>Категорія:</strong> {{ product.category }}</p>
+          <p><strong>Об'єм:</strong> {{ product.volume }} л</p>
+          <p><strong>ABV (Алкогольний вміст):</strong> {{ product.abv }}%</p>
+          <p><strong>Ціна:</strong> {{ product.price }} грн</p>
+          <p><strong>Кошерність:</strong> {% if product.is_kosher %} Так {% else %} Ні {% endif %}</p>
+          <p><strong>Обмежена серія:</strong> {% if product.is_limited %} Так {% else %} Ні {% endif %}</p>
+        </div>
+        
+        <!-- Кнопка для повернення до списку продуктів -->
+        <div class="back-btn">
+          <a href="{% url 'bar:product_list' %}" class="btn btn-primary">Повернутися до списку продуктів</a>
+        </div>
+    </div>
+</body>
+</html>
