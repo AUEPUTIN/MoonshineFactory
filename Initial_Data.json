@@ -1,0 +1,428 @@
+[
+  {
+    "model": "bar.aboutpage",
+    "pk": 1,
+    "fields": {
+      "title": "Про Ukrainian Spirit",
+      "content": "Ukrainian Spirit — бренд, що поєднує традиції та сучасність.",
+      "image": ""
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 1,
+    "fields": {
+      "name": "Ukrainian Spirit Premium",
+      "description": "Класична горілка найвищої якості з пшеничного спирту.",
+      "category": "horilka",
+      "abv": "40.0",
+      "volume": "0.5",
+      "image": "ukrspiritpremium.png",
+      "is_kosher": true,
+      "is_limited": false
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 2,
+    "fields": {
+      "name": "Настоянка Медова",
+      "description": "Солодка настоянка з натуральним медом та травами.",
+      "category": "infusion",
+      "abv": "35.0",
+      "volume": "0.5",
+      "image": "medovukha.jpg",
+      "is_kosher": false,
+      "is_limited": true
+    }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 16,
+    "fields": { "name": "Ukrainian Spirit Premium" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 17,
+    "fields": { "name": "Сік лимона" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 1,
+    "fields": { "name": "Горілка" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 2,
+    "fields": { "name": "Томатний сік" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 3,
+    "fields": { "name": "Лимонний сік" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 4,
+    "fields": { "name": "Перець чорний" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 5,
+    "fields": { "name": "Імбирне пиво" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 6,
+    "fields": { "name": "Сік лайма" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 7,
+    "fields": { "name": "Журавлинний сік" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 8,
+    "fields": { "name": "Грейпфрутовий сік" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 9,
+    "fields": { "name": "Triple sec" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 10,
+    "fields": { "name": "Кавовий лікер" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 11,
+    "fields": { "name": "Еспресо" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 12,
+    "fields": { "name": "Цукровий сироп" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 13,
+    "fields": { "name": "Апельсиновий сік" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 14,
+    "fields": { "name": "Гренадин" }
+  },
+  {
+    "model": "bar.ingredient",
+    "pk": 15,
+    "fields": { "name": "Сіль" }
+  },
+
+  {
+    "model": "bar.cocktail",
+    "pk": 8,
+    "fields": {
+      "name": "Лимонний фреш",
+      "description": "Освіжаючий коктейль на основі горілки та лимонного соку.",
+      "image": "lemon_fresh.jpg"
+    }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "pk": 1,
+    "fields": {
+      "cocktail": 8,
+      "ingredient": 16,
+      "quantity": "50 мл"
+    }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "pk": 2,
+    "fields": {
+      "cocktail": 8,
+      "ingredient": 17,
+      "quantity": "20 мл"
+    }
+  },
+
+  {
+    "model": "bar.contactinfo",
+    "pk": 1,
+    "fields": {
+      "address": "м. Київ, вул. Хрещатик, 10",
+      "phone": "+380441234567",
+      "email": "info@ukrainianspirit.ua",
+      "map_embed_url": "https://maps.google.com/?q=Kyiv"
+    }
+  },
+  {
+    "model": "bar.cocktail",
+    "pk": 1,
+    "fields": {
+      "name": "Bloody Mary",
+      "description": "Класичний коктейль з томатним соком і горілкою, подається з селерою.",
+      "image": "bloody-mary.jpg"
+    }
+  },
+  {
+    "model": "bar.cocktail",
+    "pk": 2,
+    "fields": {
+      "name": "Kyiv Mule",
+      "description": "Освіжаючий коктейль з імбирним пивом, соком лайма та горілкою, подається у мідній кружці.",
+      "image":"KyivMule.jpg"
+    }
+  },
+  {
+    "model": "bar.cocktail",
+    "pk": 3,
+    "fields": {
+      "name": "Sea Breeze",
+      "description": "Фруктовий коктейль з горілкою, журавлиним та грейпфрутовим соком.",
+      "image":"sea-breeze.jpg"
+    }
+  },
+  {
+    "model": "bar.cocktail",
+    "pk": 4,
+    "fields": {
+      "name": "Cosmopolitan",
+      "description": "Елегантний коктейль з горілкою, лікером triple sec, соком лайма та журавлини.",
+      "image":"Cosmopolitan.jpg"
+    }
+  },
+  {
+    "model": "bar.cocktail",
+    "pk": 5,
+    "fields": {
+      "name": "Salty Dog",
+      "description": "Простий коктейль на основі горілки та грейпфрутового соку з соляною облямівкою келиха.",
+      "image":"salty-dog.jpg"
+    }
+  },
+  {
+    "model": "bar.cocktail",
+    "pk": 6,
+    "fields": {
+      "name": "Espresso Martini",
+      "description": "Сучасний коктейль з горілкою, кавовим лікером та свіжозвареною кавою.",
+      "image":"espresso_martini.jpg"
+    }
+  },
+  {
+    "model": "bar.cocktail",
+    "pk": 7,
+    "fields": {
+      "name": "Horilka Sunrise",
+      "description": "Яскравий коктейль з апельсиновим соком, горілкою та гренадином.",
+      "image":"horilka_sunrise.jpg"
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 3,
+    "fields": {
+      "name": "Ukrainian Spirit з журавлиною",
+      "description": "Настоянка на стиглих ягодах журавлини з ніжним ароматом.",
+      "category": "horilka",
+      "abv": "37.5",
+      "volume": "0.5",
+      "image": "horilka_zhuravlyna.png",
+      "is_kosher": true,
+      "is_limited": false
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 4,
+    "fields": {
+      "name": "Ukrainian Spirit з перцем",
+      "description": "Гостра горілка з додаванням червоного перцю для зігрівального ефекту.",
+      "category": "horilka",
+      "abv": "40.0",
+      "volume": "0.5",
+      "image": "pepper.png",
+      "is_kosher": false,
+      "is_limited": false
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 5,
+    "fields": {
+      "name": "Зубрівка Ukrainian Spirit",
+      "description": "Ароматизована горілка на основі запашної трави зубрівки.",
+      "category": "horilka",
+      "abv": "37.5",
+      "volume": "0.5",
+      "image": "zubrivka.png",
+      "is_kosher": false,
+      "is_limited": false
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 6,
+    "fields": {
+      "name": "Ukrainian Spirit Reserve",
+      "description": "Витримана преміум-горілка з найкращих сортів пшениці.",
+      "category": "horilka",
+      "abv": "40.0",
+      "volume": "0.7",
+      "image": "reserve.jpg",
+      "is_kosher": true,
+      "is_limited": true
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 7,
+    "fields": {
+      "name": "Ukrainian Spirit Gold",
+      "description": "Горілка з 24К золотом у пляшці. Унікальна для колекціонерів.",
+      "category": "horilka",
+      "abv": "40.0",
+      "volume": "0.7",
+      "image": "gold.png",
+      "is_kosher": true,
+      "is_limited": true
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 8,
+    "fields": {
+      "name": "Ukrainian Spirit Silver",
+      "description": "Фільтрована сріблом для виняткової м’якості та чистоти.",
+      "category": "horilka",
+      "abv": "40.0",
+      "volume": "0.7",
+      "image": "silver.jpg",
+      "is_kosher": true,
+      "is_limited": true
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 9,
+    "fields": {
+      "name": "Настоянка Вишнева",
+      "description": "Ароматна настоянка на стиглій вишні з насиченим смаком.",
+      "category": "infusion",
+      "abv": "32.0",
+      "volume": "0.5",
+      "image": "vyshneva.jpg",
+      "is_kosher": true,
+      "is_limited": false
+    }
+  },
+  {
+    "model": "bar.product",
+    "pk": 10,
+    "fields": {
+      "name": "Настоянка Хріновуха",
+      "description": "Традиційна українська хрінова настоянка з медом.",
+      "category": "infusion",
+      "abv": "38.0",
+      "volume": "0.5",
+      "image": "khrinovukha.jpg",
+      "is_kosher": false,
+      "is_limited": true
+    }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 1, "ingredient": 1, "quantity": "40 мл"}
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 1, "ingredient": 2, "quantity": "60 мл"}
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 1, "ingredient": 15, "quantity": "10 г" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 2, "ingredient": 1, "quantity": "50 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 2, "ingredient": 5, "quantity": "50 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 2, "ingredient": 6, "quantity": "30 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 3, "ingredient": 1, "quantity": "25 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 3, "ingredient": 3, "quantity": "60 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 3, "ingredient": 7, "quantity": "50 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 4, "ingredient": 1, "quantity": "60 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 4, "ingredient": 8, "quantity": "30 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 4, "ingredient": 9,"quantity": "40 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 5, "ingredient": 1, "quantity": "50 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 5, "ingredient": 10, "quantity": "55 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 5, "ingredient": 11, "quantity": "30 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 5, "ingredient": 12, "quantity": "45 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 6, "ingredient": 1,"quantity": "50 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 6, "ingredient": 13,"quantity": "20 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 6, "ingredient": 14, "quantity": "60 мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 7, "ingredient": 1, "quantity": "45 мл"}
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 7, "ingredient": 6, "quantity": "10мл" }
+  },
+  {
+    "model": "bar.cocktailingredient",
+    "fields": { "cocktail": 7, "ingredient": 12, "quantity": "50 мл" }
+  }
+
+
+]
