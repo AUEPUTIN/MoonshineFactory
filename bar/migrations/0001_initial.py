@@ -66,13 +66,13 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.CharField(max_length=100)),
-                ('cocktail', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bar.cocktail')),
-                ('ingredient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bar.ingredient')),
+                ('cocktail', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bar.Cocktail')),
+                ('ingredient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bar.Ingredient')),
             ],
         ),
         migrations.AddField(
             model_name='cocktail',
             name='ingredients',
-            field=models.ManyToManyField(through='bar.CocktailIngredient', to='bar.ingredient'),
+            field=models.ManyToManyField(through='bar.CocktailIngredient', to='bar.Ingredient'),
         ),
     ]
