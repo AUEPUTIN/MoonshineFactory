@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Коктейлі — Ukrainian Spirit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            background-color: #003366;
+        }
+
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fefefe;
+        }
+        header {
+            background: url('https://ukrainianspirit.ua/storage/page/1/main.png') no-repeat center center;
+            background-size: cover;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+        }
+        header h1 { margin: 0; font-size: 2.5em; }
+        .search-form {
+            max-width: 600px; margin: 20px auto;
+        }
+        .cocktails-container {
+            display: flex; flex-wrap: wrap;
+            justify-content: center; padding: 20px;
+            gap: 30px;
+        }
+        .cocktail-card {
+            width: 300px; border: 1px solid #ddd;
+            border-radius: 10px; overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        .cocktail-card:hover {
+            transform: translateY(-5px);
+        }
+        .cocktail-card img {
+            width: 100%; height: 250px;
+            object-fit: cover;
+        }
+        .cocktail-info {
+            padding: 20px;
+        }
+        .cocktail-info h2 {
+            margin-top: 0; font-size: 1.4em;
+        }
+        .cocktail-info p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">Ukrainian Spirit</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'bar:about' %}">Про нас</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'bar:product_list' %}">Продукти</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'bar:cocktail_list' %}">Коктейлі</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'bar:contacts' %}">Контакти</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    <header>
+        
+        <h1>Наші коктейлі</h1>
+    </header>
+
+    <div class="search-form">
+        <form method="get" action="">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Пошук за назвою..." value="{{ request.GET.q }}">
+                <button class="btn btn-primary" type="submit">Пошук</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="cocktails-container">
+        {% for cocktail in cocktails %}
+        <div class="cocktail-card">
+            <a href="{% url 'bar:cocktail_detail' cocktail.pk %}">
+                <img src="{{ cocktail.image.url }}" alt="{{ cocktail.name }}">
+                <div class="cocktail-info">
+                    <h2>{{ cocktail.name }}</h2>
+                    <p>{{ cocktail.description|truncatechars:100 }}</p>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <p>Нічого не знайдено.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
