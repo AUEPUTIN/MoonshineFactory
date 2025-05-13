@@ -1,10 +1,25 @@
 import os
 import django
+from djangoProject2 import settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE","djangoProject1.settings")
 django.setup()
-from django.core.exceptions import ValidationError
+from django.contrib.admin.sites import site
+from django.db.models.fields.files import ImageFieldFile
+from bar.admin import (
+    AboutPageAdmin,
+    ProductAdmin,
+    CocktailAdmin,
+    IngredientAdmin,
+    ContactInfoAdmin,
+)
 from django.test import TestCase
+from django.core.exceptions import ValidationError
 from bar.models import Cocktail, Ingredient, AboutPage, Product, CocktailIngredient, ContactInfo
+
+def get_image():
+    rel_path = 'test_img/test.jpg'
+    full_path = os.path.join(settings.MEDIA_ROOT, rel_path)
+    return ImageFieldFile(instance=None, field=Product._meta.get_field('image'), name=rel_path)
 
 # ------------------ Model classes tests ------------------
 
@@ -163,3 +178,155 @@ class ModelsTests(TestCase):
     def test_contact_info_blank_map_url(self):
         contact = ContactInfo.objects.create(email="a@b.com", phone="222", map_embed_url="")
         self.assertEqual(contact.map_embed_url, "")
+
+# ------------------ Admin classes tests ------------------
+
+class AboutPageAdminTest(TestCase):
+    def test_image_tag(self):
+        about_page = AboutPage.objects.create(title="Test Page", content="Some content")
+        admin = AboutPageAdmin(AboutPage, site)
+        image_tag = admin.image_tag(about_page)
+        self.assertEqual(image_tag, "-")
+
+    def test_list_display(self):
+        admin = AboutPageAdmin(AboutPage, site)
+        self.assertEqual(admin.list_display, ('title', 'image_tag'))
+
+    def test_readonly_fields(self):
+        admin = AboutPageAdmin(AboutPage, site)
+        self.assertIn('image_tag', admin.readonly_fields)
+
+
+class ProductAdminTest(TestCase):
+    def test_image_tag(self):
+        product = Product.objects.create(name="Test Product", category="h", abv=40.0, volume="0.7L")
+        admin = ProductAdmin(Product, site)
+        image_tag = admin.image_tag(product)
+        self.assertEqual(image_tag, "-")
+
+    def test_list_filter(self):
+        admin = ProductAdmin(Product, site)
+        self.assertEqual(admin.list_filter, ('category', 'is_kosher', 'is_limited'))
+
+    def test_list_display(self):
+        admin = ProductAdmin(Product, site)
+        self.assertEqual(
+            admin.list_display,
+            ('name', 'category', 'abv', 'volume', 'is_kosher', 'is_limited', 'image_tag')
+        )
+
+    def test_search_fields(self):
+        admin = ProductAdmin(Product, site)
+        self.assertEqual(admin.search_fields, ('name', 'description'))
+
+    def test_readonly_fields(self):
+        admin = ProductAdmin(Product, site)
+        self.assertIn('image_tag', admin.readonly_fields)
+
+
+class CocktailAdminTest(TestCase):
+    def test_image_tag(self):
+        cocktail = Cocktail.objects.create(name="Test Cocktail", description="Test Description")
+        admin = CocktailAdmin(Cocktail, site)
+        image_tag = admin.image_tag(cocktail)
+        self.assertEqual(image_tag, "-")
+
+    def test_list_display(self):
+        admin = CocktailAdmin(Cocktail, site)
+        self.assertEqual(admin.list_display, ('name', 'image_tag'))
+
+    def test_search_fields(self):
+        admin = CocktailAdmin(Cocktail, site)
+        self.assertEqual(admin.search_fields, ('name', 'description'))
+
+    def test_readonly_fields(self):
+        admin = CocktailAdmin(Cocktail, site)
+        self.assertIn('image_tag', admin.readonly_fields)
+
+
+class IngredientAdminTest(TestCase):
+    def test_list_display(self):
+        admin = IngredientAdmin(Ingredient, site)
+        self.assertEqual(admin.list_display, ('name',))
+
+    def test_search_fields(self):
+        admin = IngredientAdmin(Ingredient, site)
+        self.assertEqual(admin.search_fields, ('name',))
+
+
+class ContactInfoAdminTest(TestCase):
+    def test_list_display(self):
+        admin = ContactInfoAdmin(ContactInfo, site)
+        self.assertEqual(admin.list_display, ('address', 'phone', 'email'))
+
+    def test_search_fields(self):
+        admin = ContactInfoAdmin(ContactInfo, site)
+        self.assertEqual(admin.search_fields, ('address', 'email'))
+
+# ------------------ View classes tests ------------------
+
+class ViewTests(TestCase):
+
+# about page tests
+
+    def test_get_object(self):
+        response = self.client.get('/about/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Про Ukrainian Spirit")
+        self.assertContains(response, "Ukrainian Spirit — це не просто напої. Це філософія, культура, і любов до українських традицій. Ми створюємо автентичні смаки, які розповідають історію України кожному, хто їх скуштує.")
+
+# product page tests
+
+    def test_get_queryset_with_filters(self):
+        image = get_image()
+        product1 = Product.objects.create(name="Vodka",
+                                          category="spirit",
+                                          abv=40.0,
+                                          volume="0.7L",
+                                          image=image,
+                                          is_kosher=True,
+                                          is_limited=False)
+        product2 = Product.objects.create(name="Whisky",
+                                          category="spirit",
+                                          abv=43.0,
+                                          volume="0.7L",
+                                          image=image,
+                                          is_kosher=False,
+                                          is_limited=False)
+        response = self.client.get('/products/?name=Vodka')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, product1.name)
+        self.assertNotContains(response, product2.name)
+
+    def test_context_in_template_for_product(self):
+        image = get_image()
+        product = Product.objects.create(name="Rum",
+                                         category="spirit",
+                                         abv=37.5,
+                                         volume="0.7L",
+                                         image=image,
+                                         is_kosher=True,
+                                         is_limited=False)
+        response = self.client.get('/products/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('products', response.context)
+        self.assertIn(product, response.context['products'])
+
+# product detail page tests
+
+    def test_get_product_detail(self):
+        image = get_image()
+        product = Product.objects.create(name="Gin",
+                                         description="Distilled spirit",
+                                         category="spirit",
+                                         abv=40.0,
+                                         volume="0.7L",
+                                         image=image,
+                                         is_kosher=True,
+                                         is_limited=False)
+        response = self.client.get(f'/products/{product.pk}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, product.name)
+        self.assertContains(response, product.description)
+        self.assertIn('product', response.context)
+        self.assertEqual(response.context['product'], product)
