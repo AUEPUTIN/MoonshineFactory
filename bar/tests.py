@@ -198,6 +198,114 @@ class ModelsTests(TestCase):
         """map_embed_url може бути порожнім"""
         contact = ContactInfo.objects.create(email="a@b.com", phone="222", map_embed_url="")
         self.assertEqual(contact.map_embed_url, "")
+# ------------------ Admin classes tests ------------------
+
+class AboutPageAdminTest(TestCase):
+    def test_image_tag(self):
+        about_page = AboutPage.objects.create(title="Test Page", content="Some content")
+        admin = AboutPageAdmin(AboutPage, site)
+        image_tag = admin.image_tag(about_page)
+        self.assertEqual(image_tag, "-")
+
+    def test_list_display(self):
+        admin = AboutPageAdmin(AboutPage, site)
+        self.assertEqual(admin.list_display, ('title', 'image_tag'))
+
+    def test_readonly_fields(self):
+        admin = AboutPageAdmin(AboutPage, site)
+        self.assertIn('image_tag', admin.readonly_fields)
+
+    def test_image_tag_with_image(self):
+        about = AboutPage.objects.create(title="With Image", content="...", image=get_image())
+        admin = AboutPageAdmin(AboutPage, site)
+        self.assertIn('<img', admin.image_tag(about))
+
+
+class ProductAdminTest(TestCase):
+    def test_image_tag(self):
+        product = Product.objects.create(name="Test Product", category="h", abv=40.0, volume="0.7L")
+        admin = ProductAdmin(Product, site)
+        image_tag = admin.image_tag(product)
+        self.assertEqual(image_tag, "-")
+
+    def test_list_filter(self):
+        admin = ProductAdmin(Product, site)
+        self.assertEqual(admin.list_filter, ('category', 'is_kosher', 'is_limited'))
+
+    def test_list_display(self):
+        admin = ProductAdmin(Product, site)
+        self.assertEqual(
+            admin.list_display,
+            ('name', 'category', 'abv', 'volume', 'is_kosher', 'is_limited', 'image_tag')
+        )
+
+    def test_search_fields(self):
+        admin = ProductAdmin(Product, site)
+        self.assertEqual(admin.search_fields, ('name', 'description'))
+
+    def test_readonly_fields(self):
+        admin = ProductAdmin(Product, site)
+        self.assertIn('image_tag', admin.readonly_fields)
+
+    def test_image_tag_with_image(self):
+        product = Product.objects.create(name="WithImage", category="h", abv=40.0, volume="0.7L", image=get_image())
+        admin = ProductAdmin(Product, site)
+        self.assertIn('<img', admin.image_tag(product))
+
+
+class CocktailAdminTest(TestCase):
+    def test_image_tag(self):
+        cocktail = Cocktail.objects.create(name="Test Cocktail", description="Test Description")
+        admin = CocktailAdmin(Cocktail, site)
+        image_tag = admin.image_tag(cocktail)
+        self.assertEqual(image_tag, "-")
+
+    def test_list_display(self):
+        admin = CocktailAdmin(Cocktail, site)
+        self.assertEqual(admin.list_display, ('name', 'image_tag'))
+
+    def test_search_fields(self):
+        admin = CocktailAdmin(Cocktail, site)
+        self.assertEqual(admin.search_fields, ('name', 'description'))
+
+    def test_readonly_fields(self):
+        admin = CocktailAdmin(Cocktail, site)
+        self.assertIn('image_tag', admin.readonly_fields)
+
+    def test_image_tag_with_image(self):
+        cocktail = Cocktail.objects.create(name="WithImage", description="Desc", image=get_image())
+        admin = CocktailAdmin(Cocktail, site)
+        self.assertIn('<img', admin.image_tag(cocktail))
+
+
+class IngredientAdminTest(TestCase):
+    def test_list_display(self):
+        admin = IngredientAdmin(Ingredient, site)
+        self.assertEqual(admin.list_display, ('name',))
+
+    def test_search_fields(self):
+        admin = IngredientAdmin(Ingredient, site)
+        self.assertEqual(admin.search_fields, ('name',))
+
+    def test_admin_fields(self):
+        admin = IngredientAdmin(Ingredient, site)
+        self.assertEqual(admin.list_display, ('name',))
+        self.assertEqual(admin.search_fields, ('name',))
+
+
+class ContactInfoAdminTest(TestCase):
+    def test_list_display(self):
+        admin = ContactInfoAdmin(ContactInfo, site)
+        self.assertEqual(admin.list_display, ('address', 'phone', 'email'))
+
+    def test_search_fields(self):
+        admin = ContactInfoAdmin(ContactInfo, site)
+        self.assertEqual(admin.search_fields, ('address', 'email'))
+
+    def test_admin_fields(self):
+        admin = ContactInfoAdmin(ContactInfo, site)
+        self.assertEqual(admin.list_display, ('address', 'phone', 'email'))
+        self.assertEqual(admin.search_fields, ('address', 'email'))
 # ------------------ View classes tests ------------------
 
 class ViewTests(TestCase):
