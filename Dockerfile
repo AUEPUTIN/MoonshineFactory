@@ -6,5 +6,4 @@ COPY . .
 RUN python manage.py migrate
 EXPOSE 8000
 
-
 CMD gunicorn djangoProject1.wsgi --bind 0.0.0.0:$PORT
