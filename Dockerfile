@@ -5,6 +5,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 RUN python manage.py migrate
 EXPOSE 8000
-
-
-CMD gunicorn djangoProject1.wsgi --bind 0.0.0.0:$PORT
+CMD gunicorn djangoProject2.wsgi --bind 0.0.0.0:$PORT

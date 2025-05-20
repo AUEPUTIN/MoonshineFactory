@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-#ji+-jpgrl-n4b)w+6*v&^hc(tt*(02oo3=o35skz^g9qxaz0@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'moonshine-factory-32064361303c.herokuapp.com/').split(',')
 
 
 # Application definition
