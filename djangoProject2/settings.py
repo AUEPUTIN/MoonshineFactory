@@ -29,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'moonshine-factory-32064361303c.herokuapp.com/').split(',')
 
-
 # Application definition
 
 INSTALLED_APPS = [
